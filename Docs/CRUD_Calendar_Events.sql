@@ -1,0 +1,64 @@
+-- Create DABATASE
+
+IF DB_ID ('AGENDA') IS NULL
+	CREATE DATABASE AGENDA;
+USE AGENDA;
+-- Create Tables
+
+IF OBJECT_ID ('Cliente', 'U') IS NOT NULL
+DROP TABLE Cliente;
+
+CREATE TABLE Cliente(
+Id INT NOT NULL,
+Nome VARCHAR(50) NOT NULL,
+Password VARCHAR(50) NOT NULL,
+Email VARCHAR(50) NULL,
+Telefone VARCHAR(14) NULL)
+GO
+
+IF OBJECT_ID ('Endereco', 'U') IS NOT NULL
+DROP TABLE Endereco;
+
+CREATE TABLE Endereco(
+Cliente_Id INT NOT NULL,
+Logradouro VARCHAR(50) NOT NULL,
+Numero INT NOT NULL,
+Complemento VARCHAR(30) NULL,
+Bairro VARCHAR(30) NULL,
+Cep VARCHAR(9) NOT NULL)
+GO
+
+IF OBJECT_ID ('Evento', 'U') IS NOT NULL
+DROP TABLE Evento;
+use AGENDA
+CREATE TABLE Evento(
+Id INT NOT NULL,
+Nome VARCHAR(50) NOT NULL,
+DataInicio VARCHAR(50) not NULL,
+DataFinal VARCHAR(50) not NULL,
+Descricao VARCHAR(50) NULL)
+
+Drop table Evento
+GO
+
+
+
+-- Constraints PK
+ALTER TABLE Cliente
+ADD CONSTRAINT PK_Cliente PRIMARY KEY(Id);
+GO
+
+ALTER TABLE Cliente
+ADD CONSTRAINT UNIQUE_AccountLogin_Email UNIQUE (Email);
+GO
+
+-- Constraints FK
+
+ALTER TABLE Endereco
+ADD CONSTRAINT FK_Endereco FOREIGN KEY (Cliente_Id) REFERENCES Cliente(Id);
+GO
+
+
+
+
+

@@ -1,0 +1,100 @@
+﻿<Window x:Class="CalendarEvent.View.Cliente"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CalendarEvent.View"
+        xmlns:vm="clr-namespace:CalendarEvent.ViewModel"
+        mc:Ignorable="d"
+        Title="Cliente"
+        Height="450"
+        Width="800"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <vm:ClienteViewModel x:Name="viewModel" />
+    </Window.DataContext>
+    
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>            
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+    
+
+        <DockPanel Grid.Row="0" Grid.Column="1" Margin="5,0,0,0" LastChildFill="True">
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Cadastrar" Width="60" Height="30" Margin="10,0,0,0" Command="{Binding NovoClienteCommand}" />
+                <Button Content="Gravar" Width="60" Height="30" Margin="10,0,0,0" Command="{Binding GravarClienteCommand}" />
+                <Button Content="Cancelar" Width="60" Height="30" Margin="10,0,0,0" Command="{Binding CancelarEdicaoClienteCommand}" />
+                <Button Content="Voltar" Width="60" Height="30" Margin="10,0,0,0" Click="Button_Click"  />
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <GroupBox Header="Dados Pessoais" Padding="10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0" Content="Nome: *" />
+                        <TextBox Name="txtNome" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Padding="2" Text="{Binding Cliente.Nome, UpdateSourceTrigger=PropertyChanged}" MaxLength="50" IsEnabled="{Binding IsEditing}" />
+
+                        <Label Grid.Row="1" Grid.Column="0" Content="Password: *" />
+                        <TextBox Name="txtPassword" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Padding="2" Text="{Binding Cliente.Password, UpdateSourceTrigger=PropertyChanged}" MaxLength="50" IsEnabled="{Binding IsEditing}" />
+
+
+
+                        <Label Grid.Row="2" Grid.Column="0" Content="E-mail:" />
+                        <TextBox Name="txtEmail" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Padding="2" Text="{Binding Cliente.Email, UpdateSourceTrigger=PropertyChanged}" MaxLength="50" IsEnabled="{Binding IsEditing}" />
+
+                        <Label Grid.Row="3" Grid.Column="0" Content="Telefone:" />
+                        <TextBox Name="txtTelefone" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Padding="2" Text="{Binding Cliente.Telefone, UpdateSourceTrigger=PropertyChanged}" MaxLength="14" IsEnabled="{Binding IsEditing}" PreviewTextInput="HandleSpecialChars" PreviewKeyDown="HandleSpaceChar" />
+
+                        <!--<Label Grid.Row="4" Grid.Column="0" Content="Cpf:"/>
+                        <TextBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Padding="2" Text="" />-->
+                    </Grid>
+                </GroupBox>
+                <GroupBox Header="Endereço" Padding="10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0" Content="Logradouro: *" />
+                        <TextBox Name="txtLogradouro" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Padding="2" Text="{Binding Cliente.Endereco.Logradouro, UpdateSourceTrigger=PropertyChanged}" MaxLength="50" IsEnabled="{Binding IsEditing}" />
+
+                        <Label Grid.Row="1" Grid.Column="0" Content="Número: *" />
+                        <TextBox Name="txtNumero" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Padding="2" Text="{Binding Cliente.Endereco.Numero, UpdateSourceTrigger=PropertyChanged}" MaxLength="6" IsEnabled="{Binding IsEditing}" PreviewTextInput="HandleSpecialChars" PreviewKeyDown="HandleSpaceChar" />
+
+                        <Label Grid.Row="2" Grid.Column="0" Content="Complemento:" />
+                        <TextBox Name="txtComplemento" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Padding="2" Text="{Binding Cliente.Endereco.Complemento, UpdateSourceTrigger=PropertyChanged}" MaxLength="30" IsEnabled="{Binding IsEditing}" />
+
+                        <Label Grid.Row="3" Grid.Column="0" Content="Bairro:" />
+                        <TextBox Name="txtBairro" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Padding="2" Text="{Binding Cliente.Endereco.Bairro, UpdateSourceTrigger=PropertyChanged}" MaxLength="30" IsEnabled="{Binding IsEditing}" />
+
+                        <Label Grid.Row="4" Grid.Column="0" Content="CEP: *" />
+                        <TextBox Name="txtCep" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Padding="2" Text="{Binding Cliente.Endereco.Cep, UpdateSourceTrigger=PropertyChanged}" MaxLength="9" IsEnabled="{Binding IsEditing}" PreviewTextInput="HandleSpecialChars" PreviewKeyDown="HandleSpaceChar" />
+                    </Grid>
+                </GroupBox>
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</Window>

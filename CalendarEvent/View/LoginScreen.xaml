@@ -1,0 +1,47 @@
+﻿<Window x:Class="CalendarEvent.View.LoginScreen"
+        x:Name="This"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CalendarEvent.View"
+        xmlns:vm="clr-namespace:CalendarEvent.ViewModel"
+        mc:Ignorable="d"
+        Title="Login"
+        Height="400"
+        Width="400"
+        FontSize="16"
+        Background="#04c582"
+        WindowStartupLocation="CenterScreen"
+        >
+    <Window.DataContext>
+        <vm:AuthenticateViewModel x:Name="viewModel" />
+    </Window.DataContext>
+    
+    <Border Background="#2e3137" CornerRadius="20" Margin="20" Padding="15">
+        <StackPanel >
+            <Label Content="Login" Foreground="White" FontSize="25" HorizontalAlignment="Center"/>
+            <Separator></Separator>
+            <Label Content="Email" Foreground="White"/>
+            <TextBox Name="txtUsername" Background="#545d6a" Foreground="White" FontSize="18" Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" />
+            <Label Content="Password" Foreground="White"/>
+            <PasswordBox Name="UserPassword" Background="#545d6a" Foreground="White" FontSize="18"/>
+            
+            <StackPanel Orientation="Horizontal">
+                <Button Name="btnLogin" Content="Login" Margin="10,15,10,5" Background="#66a3ff" Foreground="White" FontSize="18" Command="{Binding ValidarLoginCommand}" CommandParameter="{Binding ElementName=This}" HorizontalAlignment="Left"/>
+                <!--<Button Content="Login" Grid.Row="0" Grid.Column="0" Height="30" Margin="0,10,5,0" Command="{Binding ValidarLoginCommand}" CommandParameter="{Binding ElementName=This}" />-->
+                <Button Name="btnCancel" Content="Cancelar" Margin="10,15,10,5" Background="#ff4d4d" Foreground="White" FontSize="18" Command="{Binding Cancelar}" CommandParameter="{Binding ElementName=This}" Width="76" RenderTransformOrigin="-0.121,0.46" HorizontalAlignment="Right" />
+                
+            </StackPanel>
+
+
+
+            <!--<Button Name="btnSignup" Content="Não possui conta? Cadastre-se!" Margin="5,25,5,0" Background="#f76036" Foreground="White" FontSize="18" Command="{Binding NovaConta}" CommandParameter="{Binding ElementName=This}" Click="BtnSignup_Click" />-->
+            <Button Name="btnSignup" Content="Não possui conta? Cadastre-se!" Margin="5,25,5,0" Background="#f76036" Foreground="White" FontSize="18" Click="BtnSignup_Click" />            
+
+            </StackPanel>
+    </Border>
+        
+        
+    
+</Window>

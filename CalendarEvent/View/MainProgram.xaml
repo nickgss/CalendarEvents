@@ -1,0 +1,118 @@
+﻿<Window x:Class="CalendarEvent.View.MainProgram"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CalendarEvent.View"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+        xmlns:vm="clr-namespace:CalendarEvent.ViewModel"
+        mc:Ignorable="d"
+        WindowState="Maximized"
+        MinWidth="800"
+        MinHeight="600"
+        WindowStartupLocation="CenterScreen" Closing="Window_Closing"
+        Title="MainProgram"  >
+
+    <Window.DataContext>
+        <vm:EventoViewModel x:Name="viewModel" />
+    </Window.DataContext>
+    <DockPanel LastChildFill="True">
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Arquivo" Padding="3">
+                <MenuItem Header="_Sair" Command="{Binding SairCommand}" />
+            </MenuItem>
+            <MenuItem Header="_Editar">
+                <MenuItem Header="_Recortar" Command="ApplicationCommands.Cut" />
+                <MenuItem Header="_Copiar" Command="ApplicationCommands.Copy" />
+                <MenuItem Header="Co_lar" Command="ApplicationCommands.Paste" />
+                <Separator />
+                <MenuItem Header="Selecionar _tudo" Command="ApplicationCommands.SelectAll" />
+            </MenuItem>
+            <MenuItem Header="_Evento">
+                <MenuItem Header="_Novo" Command="{Binding NovoEventoCommand}" />
+                <MenuItem Header="_Excluir" Command="{Binding ExcluirEventoCommand}" />
+                <MenuItem Header="E_ditar" Command="{Binding EditarEventoCommand}" />
+                <MenuItem Header="_Gravar" Command="{Binding GravarEventoCommand}" />
+                <MenuItem Header="_Cancelar" Command="{Binding CancelarEdicaoEventoCommand}" />
+                <MenuItem Header="_Visualizar Eventos" Click="MenuItem_Click"/>
+                <Separator />
+                <MenuItem Header="_Pesquisar" Command="{Binding PesquisarCommand}"  />
+            </MenuItem>
+        </Menu>
+
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="230" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Row="0" Grid.Column="0" Margin="0,0,5,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding TextoPesquisa, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Padding="2" />
+                <Button Grid.Row="0" Grid.Column="1" Content="Pesquisar" Command="{Binding PesquisarCommand}" Padding="2" Width="65" Margin="5,0,0,0" />
+
+                <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Name="listEventos" Margin="0,5,0,0" ItemsSource="{Binding Eventos}" SelectedIndex="{Binding SelectedIndex}" DisplayMemberPath="Nome" IsEnabled="{Binding IsViewing}" />
+
+                
+
+            </Grid>
+
+            <DockPanel Grid.Row="0" Grid.Column="1" Margin="5,0,0,0" LastChildFill="True">
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Novo" Width="60" Height="30" Margin="10,0,0,0" Command="{Binding NovoEventoCommand}" />
+                    <Button Content="Excluir" Width="60" Height="30" Margin="10,0,0,0" Command="{Binding ExcluirEventoCommand}" />
+                    <Button Content="Editar" Width="60" Height="30" Margin="10,0,0,0" Command="{Binding EditarEventoCommand}" />
+                    <Button Content="Gravar" Width="60" Height="30" Margin="10,0,0,0" Command="{Binding GravarEventoCommand}" />
+                    <Button Content="Cancelar" Width="60" Height="30" Margin="10,0,0,0" Command="{Binding CancelarEdicaoEventoCommand}" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <GroupBox Header="Eventos" Padding="10" Margin="20">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Row="0" Grid.Column="0" Content="Nome: *" />
+                            <TextBox Name="txtEventName" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="1" Padding="2" Text="{Binding Evento.Nome, UpdateSourceTrigger=PropertyChanged}" MaxLength="50" IsEnabled="{Binding IsEditing}"  />
+
+                            <Label Grid.Row="1" Grid.Column="0" Content="Data Inicio " />
+                            <wpfTool:MaskedTextBox Mask="00/00/0000 00:00" Name="txtStartTime" Grid.Row="1" Grid.Column="1" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="1" Padding="2" Text="{Binding Evento.DataInicio, UpdateSourceTrigger=PropertyChanged}" MaxLength="15" IsEnabled="{Binding IsEditing}" />
+
+                            <Label Grid.Row="2" Grid.Column="0" Content="Data Fim" />
+                            <wpfTool:MaskedTextBox Mask="00/00/0000 00:00" Width="120" Name="txtEndTime" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="1" Padding="2" Text="{Binding Evento.DataFinal, UpdateSourceTrigger=PropertyChanged}" MaxLength="15" IsEnabled="{Binding IsEditing}"  />
+
+                            <Label Grid.Row="3" Grid.Column="0" Content="Descricao"/>
+                            <TextBox Name="txtDescricao" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="1" Padding="2" Text="{Binding Evento.Descricao, UpdateSourceTrigger=PropertyChanged}" MaxLength="150" IsEnabled="{Binding IsEditing}"   />
+                        </Grid>
+                    </GroupBox>
+                    <StackPanel>
+
+                        <Calendar></Calendar>
+                    </StackPanel>
+
+
+                </StackPanel>
+            </DockPanel>
+        </Grid>
+    </DockPanel>
+</Window>
